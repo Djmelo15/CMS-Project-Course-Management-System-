@@ -1,0 +1,132 @@
+Course Management System (CMS)
+Overview
+The Course Management System (CMS) is a Java-based application designed to manage courses, students, and lecturers. It allows users to:
+
+Register as a student.
+Log in as a student or lecturer.
+lecturer Can upload assignments and input grades for students
+lecturer can see the students enrolled in their class and their grades
+Students can view, subscribe and unsubscribe from courses
+Students can view their grades and course assignments
+
+
+Prerequisites
+Java Development Kit (JDK) installed on your system.
+
+MySQL Database with the following configuration:
+
+Database Name: cms
+Database Port: 3308
+User: root
+Password: Djxbox360@
+These are our database information if you wish to create your own you would need to change the information above
+
+
+
+Create and configure the following tables in your MySQL database:
+CREATE TABLE students (
+    student_id INT AUTO_INCREMENT PRIMARY KEY,
+    Fname VARCHAR(50),
+    Lname VARCHAR(50),
+    dob DATE,
+    email VARCHAR(100) UNIQUE,
+    password VARCHAR(100)
+);
+
+
+CREATE TABLE lecturers (
+    lecturer_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(100) UNIQUE,
+    password VARCHAR(100)
+);
+
+
+CREATE TABLE courses (
+    course_id INT AUTO_INCREMENT PRIMARY KEY,
+    course_name VARCHAR(100),
+    course_description TEXT,
+    lecturer_id INT,
+    FOREIGN KEY (lecturer_id) REFERENCES lecturers(lecturer_id)
+);
+
+
+CREATE TABLE subscriptions (
+    student_id INT,
+    course_id INT,
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (course_id) REFERENCES courses(course_id)
+);
+
+CREATE TABLE assignments (
+    assignment_id INT AUTO_INCREMENT PRIMARY KEY,
+    course_id INT,
+    assignment_title VARCHAR(100),
+    assignment_description TEXT,
+    file_url VARCHAR(255),
+    due_date DATE,
+    FOREIGN KEY (course_id) REFERENCES courses(course_id)
+);
+CREATE TABLE grades (
+    course_id INT,
+    student_id INT,
+    grade VARCHAR(5),
+    PRIMARY KEY (course_id, student_id),
+    FOREIGN KEY (course_id) REFERENCES courses(course_id),
+    FOREIGN KEY (student_id) REFERENCES students(student_id)
+);
+
+
+INSERT INTO lecturers (lecturer_id, first_name, last_name, email, password)
+VALUES
+(1, 'John', 'Doe', 'johndoe@example.com', 'password123'),
+(2, 'Jane', 'Smith', 'janesmith@example.com', 'password456'),
+(3, 'David', 'Brown', 'davidbrown@example.com', 'password789'),
+(4, 'Emily', 'Johnson', 'emilyjohnson@example.com', 'password321'),
+(5, 'Michael', 'Williams', 'michaelwilliams@example.com', 'password654'),
+(6, 'Laura', 'Davis', 'lauradavis@example.com', 'password987'),
+(7, 'James', 'Miller', 'jamesmiller@example.com', 'password258'),
+(8, 'Olivia', 'Garcia', 'oliviagarcia@example.com', 'password369'),
+(9, 'William', 'Martinez', 'williammartinez@example.com', 'password741'),
+(10, 'Wali', 'Johnson', 'wali@email.com', 'walimelo');
+
+
+INSERT INTO courses (course_id, course_name, lecturer_id, course_description)
+VALUES
+(10, 'Artificial Intelligence 505', 1, 'An advanced course in AI, covering topics such as machine learning, neural networks, and natural language processing.'),
+(11, 'Calculus I & II 404', 2, 'A comprehensive calculus course that covers differential and integral calculus.'),
+(12, 'Chemistry for Engineers 303', 3, 'An introduction to chemistry concepts relevant to engineering, including material properties and chemical reactions.'),
+(13, 'Data Structures 606', 4, 'An advanced course on data structures such as trees, graphs, and hash tables, with a focus on algorithm optimization.'),
+(14, 'Database Management 808', 5, 'A detailed course on relational database design, SQL queries, and database management systems.'),
+(15, 'Intro to Programming 101', 6, 'A beginner-level course in programming, introducing fundamental concepts and languages like Python and Java.'),
+(16, 'Physics I & II 202', 7, 'An introductory physics course covering mechanics, thermodynamics, and electromagnetism.'),
+(17, 'Software Design and Architecture 909', 8, 'A course focused on software design principles, architecture patterns, and system development methodologies.'),
+(18, 'System Programming 707', 9, 'A course that explores low-level programming and system architecture, with a focus on operating systems and compilers.'),
+(19, 'Stats', 10, 'Statistics and probability.');
+
+
+
+
+
+
+How to Use:
+
+Main Menu
+Register: Create a new student account.
+Login:
+Lecturer: Access lecturer dashboard for course and grade management.
+Student: Access student dashboard for course management.
+Exit: Close the application.
+Student Dashboard
+View available and subscribed courses.
+Subscribe or unsubscribe from courses.
+View grades and assignments.
+Lecturer Dashboard
+View assigned courses and enrolled students.
+Input grades and assign assignments.
+
+
+
+
